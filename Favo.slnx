@@ -1,0 +1,19 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/backend/Favo.Api/Favo.Api.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/Favo.Checks/Favo.Checks.csproj" />
+  </Folder>
+  <Folder Name="/Frontend/">
+    <File Path="src/frontend/package.json" />
+    <File Path="src/frontend/src/App.tsx" />
+    <File Path="src/frontend/src/styles.css" />
+    <File Path="src/frontend/vite.config.ts" />
+  </Folder>
+  <Folder Name="/Docs/">
+    <File Path="README.md" />
+    <File Path="docs/shared-identity.md" />
+    <File Path="Start-Favo.ps1" />
+  </Folder>
+</Solution>

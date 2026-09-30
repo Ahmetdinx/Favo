@@ -1,0 +1,206 @@
+:root {
+  font-family: Inter, "Segoe UI", Arial, sans-serif;
+  color: #eee9e3;
+  background: #141416;
+  color-scheme: dark;
+  font-synthesis: none;
+  font-size: 16px;
+  --muted: #aaa5a2;
+  --line: #ffffff15;
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: radial-gradient(ellipse at 80% 0%, #533d3325, transparent 45%), #141416; }
+a { color: inherit; text-decoration: none; }
+button { font: inherit; color: inherit; cursor: pointer; border: 0; }
+button, a { -webkit-tap-highlight-color: transparent; }
+:is(button, a, input):focus-visible { outline: 3px solid #e9ba85; outline-offset: 5px; }
+::selection { background: #97664a; color: #fff; }
+.header, main, footer { max-width: 1320px; margin: auto; padding-inline: 40px; }
+.header { height: 100px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid var(--line); }
+.brand { display: inline-flex; align-items: center; gap: 10px; font-size: 39px; font-weight: 750; letter-spacing: -2.5px; }
+.brand-mark, .hero-mark, .tiny-mark { display: inline-block; background: #e5c9a8; mask: url('/brand/favo-mark.png') center / contain no-repeat; width: 44px; height: 44px; }
+.header nav { display: flex; align-items: center; gap: 34px; font-size: 13px; }
+.explore-link { color: #c4bcb5; }
+.account-link { border: 1px solid #ffffff25; border-radius: 30px; padding: 12px 19px; background: #ffffff05; display: flex; gap: 25px; align-items: center; }
+.account-link:hover { background: #ffffff10; border-color: #d5af8250; }
+.hero { display: flex; align-items: center; justify-content: space-between; padding: 38px 0 45px; }
+.eyebrow { font-size: 10px; letter-spacing: 2.2px; font-weight: 650; display: flex; align-items: center; gap: 9px; color: #b5a28c; }
+.eyebrow > span { width: 5px; height: 5px; border-radius: 50%; background: #ddae79; box-shadow: 0 0 12px #ddae7955; }
+h1 { font-size: clamp(54px, 5.5vw, 76px); font-weight: 500; letter-spacing: -4px; line-height: 1.05; margin: 20px 0 18px; }
+h1 em { font-family: Georgia, serif; font-weight: 400; color: #d6b18a; }
+.period { color: #cb825e; }
+.intro { font-size: 14px; line-height: 1.8; color: var(--muted); margin-bottom: 0; }
+.hero-note { margin-right: 70px; transform: rotate(8deg); text-align: center; }
+.hero-mark { width: 140px; height: 140px; background: linear-gradient(140deg, #9b785652, #d4b69018); }
+.hero-note p { font-size: 11px; line-height: 1.8; color: #a49a90; }
+.hero-note b { font-weight: 400; color: #c3b5a6; }
+.section-heading { display: flex; align-items: center; justify-content: space-between; margin-bottom: 22px; }
+.section-heading h2 { font-size: 18px; letter-spacing: -.4px; font-weight: 500; margin: 0; }
+.section-heading > span { font-size: 11px; color: #9e958b; }
+.world-grid { display: grid; grid-template-columns: 1.25fr 1fr 1fr; grid-template-rows: 280px 280px; gap: 18px; }
+.book-card, .world-card { position: relative; border-radius: 17px; overflow: hidden; isolation: isolate; }
+.book-card { grid-row: span 2; color: #3e2d24; padding: 25px 27px; background: radial-gradient(ellipse at 10% 0%, #fff4dfb3, transparent 58%), linear-gradient(115deg, #b99a7a, #dfcbb1 40%, #e6d5bd 70%, #bea080); border: 1px solid #e5cbb080; box-shadow: 0 15px 40px #0003; }
+.book-card::before { content: ''; position: absolute; inset: 0; z-index: -1; pointer-events: none; opacity: .33; background-image: radial-gradient(#66432338 .55px, transparent .85px), repeating-linear-gradient(0deg, transparent 0 3px, #79533308 3px 4px); background-size: 5px 7px, 100% 4px; }
+.book-card::after { content: ''; position: absolute; width: 250px; height: 310px; border: 1px solid #77523826; border-radius: 150px 150px 0 0; top: 70px; left: 50%; transform: translateX(-50%); z-index: -1; box-shadow: 0 0 0 15px #fff7eb15, 0 0 0 16px #7752380d; }
+.card-top { display: flex; align-items: center; justify-content: space-between; position: relative; z-index: 2; }
+.card-top > span:last-child:not(.soon) { font-size: 23px; }
+.live { display: flex; align-items: center; gap: 8px; font-size: 9px; letter-spacing: 1.2px; font-weight: 700; }
+.live i { width: 6px; height: 6px; background: #79563d; border-radius: 50%; }
+.book-art { position: absolute; width: 300px; height: 280px; top: 90px; left: 50%; transform: translateX(-50%); transition: transform .35s ease; }
+.book-card:hover .book-art { transform: translateX(-50%) translateY(-7px) rotate(-2deg); }
+.book-cover { position: absolute; top: 15px; left: 61px; width: 163px; height: 231px; background: linear-gradient(110deg, #594131, #79563d 48%, #684936); color: #f1e8dc; border-radius: 2px 6px 6px 2px; transform: rotate(-12deg); padding: 20px; box-shadow: inset 4px 0 #39281f, inset 7px 0 #9c79534d, 12px 17px 28px #49301f50; overflow: hidden; }
+.book-cover::after { content: ''; position: absolute; inset: 11px 10px 11px 13px; border: 1px solid #e6c59655; pointer-events: none; }
+.book-cover > span { font-size: 6px; letter-spacing: 1.5px; position: relative; z-index: 1; }
+.book-cover strong { display: block; font: 34px/1.07 Georgia, serif; margin-top: 28px; position: relative; z-index: 1; }
+.book-cover em { color: #dec09a; }
+.book-cover small { position: absolute; bottom: 23px; font-size: 5px; letter-spacing: .8px; }
+.cover-shape { position: absolute; width: 120px; height: 120px; border: 1px solid #dbb98755; border-radius: 100%; bottom: 18px; right: -66px; box-shadow: 0 0 0 9px #dbb98712, 0 0 0 18px #dbb9870a; }
+.book-back { position: absolute; top: 30px; left: 108px; width: 151px; height: 222px; background: repeating-linear-gradient(90deg, #cfbda2 0 1px, #f1e8dc 1px 3px); border: 7px solid #a28362; border-radius: 3px; transform: rotate(8deg); box-shadow: 8px 9px 20px #53351e20; }
+.book-shadow { position: absolute; bottom: 7px; left: 25px; width: 260px; height: 16px; background: #50321b30; border-radius: 50%; filter: blur(8px); }
+.book-spark { position: absolute; right: 0; top: 22px; font: 28px Georgia, serif; color: #79563d; }
+.book-copy { position: absolute; bottom: 26px; left: 27px; right: 27px; }
+.mini-label { font-size: 9px; letter-spacing: 1.7px; font-weight: 600; }
+.book-copy .mini-label { color: #775b43; margin-bottom: 7px; }
+h3 { font-weight: 550; letter-spacing: -.6px; margin: 0; }
+.book-copy h3 { font: 43px/1.1 Georgia, serif; letter-spacing: -1px; }
+.book-copy > p:not(.mini-label) { font-size: 13px; color: #67513f; margin: 11px 0 24px; }
+.book-cta { margin-top: 22px; font-size: 12px; font-weight: 600; border-top: 1px solid #79563d35; padding-top: 17px; display: flex; justify-content: space-between; align-items: center; }
+.book-cta > span { display: grid; place-items: center; font-size: 20px; background: #79563d; color: #f1e8dc; border-radius: 50%; width: 32px; height: 32px; transition: transform .2s; }
+.book-card:hover .book-cta > span { transform: translateX(4px); }
+.world-card { padding: 20px 23px; display: flex; flex-direction: column; border: 1px solid #ffffff13; }
+.world-card::after { content: ''; position: absolute; inset: 0; pointer-events: none; border-radius: inherit; box-shadow: inset 0 1px #ffffff08; }
+.world-card .mini-label { opacity: .7; }
+.film { background: radial-gradient(ellipse at 65% 22%, #9a354455, transparent 67%), #321b25; color: #f2d5cc; }
+.series { background: radial-gradient(ellipse at 60% 25%, #31788a50, transparent 70%), #142731; color: #c5e8e9; }
+.anime { background: radial-gradient(ellipse at 70% 15%, #ae648340, transparent 65%), #2b2444; color: #e7d5f7; }
+.manga { background: radial-gradient(ellipse at 60% 30%, #7e653e35, transparent 70%), #2e2b24; color: #eee0b3; }
+.soon { font-size: 10px; padding: 5px 10px; border-radius: 20px; border: 1px solid #ffffff20; background: #00000015; }
+.world-copy { position: relative; z-index: 1; margin-top: auto; }
+.world-copy h3 { font-size: 26px; }
+.film h3 { font-family: Georgia, serif; font-weight: 400; font-size: 29px; }
+.series h3 { font-weight: 450; letter-spacing: -.8px; }
+.anime h3 { font-weight: 650; }
+.manga h3 { font-size: 21px; font-weight: 650; letter-spacing: -.7px; }
+.world-copy p { font-size: 12px; margin: 8px 0 1px; opacity: .8; }
+.art { height: 154px; position: relative; display: flex; align-items: center; justify-content: center; }
+/* Film: a clapperboard in the warm light of a cinema. */
+.film-art { position: relative; width: 155px; height: 105px; transform: rotate(-11deg); border: 1px solid #d2a49550; border-radius: 4px; background: linear-gradient(125deg, #4d3336, #231c22); box-shadow: 15px 18px 30px #0005; }
+.film-art::before { content: ''; position: absolute; inset: -17px -1px auto; height: 23px; border: 1px solid #d2a49570; background: repeating-linear-gradient(125deg, #e7cdb8 0 20px, #3c2d31 20px 40px); transform: rotate(-9deg); transform-origin: left bottom; border-radius: 3px; }
+.film-frame { display: none; }
+.film-frame:nth-child(2) { display: grid; place-items: center; position: absolute; inset: 19px 15px 15px; border-top: 1px solid #e7cdb830; border-bottom: 1px solid #e7cdb830; color: #ddb299; }
+.film-frame:nth-child(2)::before { content: 'FAVO PICTURES'; font-size: 6px; letter-spacing: 2px; position: absolute; top: 7px; }
+.film-frame:nth-child(2) span { font-size: 23px; padding-top: 8px; }
+/* Series: stacked episode frames, with a visible playback timeline. */
+.series-art { width: 162px; height: 96px; position: relative; transform: rotate(7deg); }
+.series-art i { position: absolute; inset: 0; border-radius: 7px; border: 1px solid #86c3c950; background: #284654; transform: translate(14px, -11px); }
+.series-art i:nth-child(2) { transform: translate(5px, -4px); background: #285564; }
+.series-art i:last-child { transform: translate(-5px, 6px); background: linear-gradient(125deg, #3b7380, #193c4c); padding: 9px 14px; color: #d3f0ed; font-style: normal; box-shadow: 10px 16px 20px #0004; }
+.series-art i:last-child::after { content: ''; position: absolute; bottom: 9px; left: 14px; right: 14px; height: 2px; background: linear-gradient(90deg, #b2d9d3 38%, #ffffff20 38%); }
+.series-art span { font-size: 9px; letter-spacing: 2px; }
+.series-art b { display: block; font-size: 18px; line-height: 1.05; margin-top: 5px; letter-spacing: 2px; font-weight: 500; }
+/* Anime: a twilight sun and a torii silhouette. */
+.anime-art { position: relative; width: 205px; height: 150px; }
+.sun { position: absolute; width: 100px; height: 100px; border-radius: 50%; background: linear-gradient(#f0a2a5, #c07099 70%, #8d5b92); top: 10px; left: 60px; box-shadow: 0 0 45px #d480a52a; }
+.orbit { position: absolute; width: 132px; height: 12px; left: 32px; top: 59px; background: #29253f; transform: rotate(-4deg); z-index: 2; border-radius: 0 0 45% 45%; box-shadow: 0 21px 0 -4px #29253f; }
+.orbit::before, .orbit::after { content: ''; position: absolute; top: 3px; width: 8px; height: 71px; background: #29253f; }
+.orbit::before { left: 27px; transform: rotate(3deg); }
+.orbit::after { right: 27px; transform: rotate(-3deg); }
+.anime-art span { position: absolute; left: 22px; top: 6px; font-size: 23px; color: #d8b9e8; }
+.anime-art b { position: absolute; right: 17px; top: 67px; font-size: 29px; color: #dda3c1; }
+/* Manga: ink panels, halftone print and an expressive speech bubble. */
+.manga-art { display: grid; grid-template-columns: 72px 68px; grid-template-rows: 48px 47px; gap: 5px; transform: rotate(-8deg); border: 5px solid #191a1b; background: #191a1b; box-shadow: 10px 13px 0 #c5ad6030, 15px 22px 25px #0004; }
+.manga-art i { background: #e8dbb6; border: 1px solid #191a1b; display: grid; place-items: center; font-style: normal; overflow: hidden; color: #292820; }
+.manga-art i:first-child { grid-row: span 2; background: repeating-conic-gradient(from 20deg at 50% 120%, #292820 0deg 2deg, #e8dbb6 2deg 9deg); }
+.manga-art i:nth-child(2) { font: bold 30px Georgia, serif; background: radial-gradient(#544f3d55 .65px, transparent .8px) 0 0 / 4px 4px, #e8dbb6; }
+.manga-art i:nth-child(2) span { display: grid; place-items: center; background: #f8efd6; border: 1px solid #292820; border-radius: 50%; width: 32px; height: 35px; }
+.manga-art i:last-child { font-size: 44px; line-height: 1; background: #ccb564; }
+.closing { margin: 28px 0 40px; display: flex; align-items: center; gap: 13px; border: 1px solid var(--line); border-radius: 12px; padding: 20px 24px; background: #ffffff02; }
+.tiny-mark { width: 24px; height: 24px; background: #a48a70; }
+.closing p { font-size: 12px; color: var(--muted); margin: 0; }
+.closing strong { font-weight: 500; color: #dbc8b3; }
+.closing > span:last-child { margin-left: auto; font-size: 11px; color: var(--muted); }
+footer { border-top: 1px solid var(--line); padding-block: 23px 28px; display: flex; align-items: center; gap: 27px; }
+footer .brand { font-size: 25px; gap: 6px; letter-spacing: -1.5px; }
+footer .brand-mark { width: 26px; height: 26px; }
+footer p, footer > span { font-size: 10px; color: #a59b91; }
+footer > span { margin-left: auto; }
+.skip-link { position: fixed; left: 15px; top: -100px; z-index: 20; padding: 15px; background: #e5c9a8; color: #211a15; }
+.skip-link:focus { top: 15px; }
+dialog { padding: 0; border: 1px solid #b7977338; border-radius: 20px; max-width: 460px; width: calc(100% - 32px); color: #eee9e3; background: #212022; box-shadow: 0 30px 100px #0008; }
+dialog::backdrop { background: #09090cb3; backdrop-filter: blur(7px); }
+.dialog-body { padding: 38px; position: relative; }
+.close { position: absolute; top: 15px; right: 17px; background: transparent; font-size: 28px; }
+.dialog-mark { width: 48px; height: 48px; margin-bottom: 18px; }
+.dialog-body h2 { font-size: 30px; font-weight: 500; letter-spacing: -1px; }
+.dialog-body > p:not(.eyebrow) { line-height: 1.7; font-size: 14px; color: #bcb1a7; }
+.primary { display: flex; align-items: center; justify-content: space-between; background: #d6b18a; color: #251c17; border-radius: 30px; padding: 15px 22px; font-size: 13px; font-weight: 600; margin: 25px 0; }
+.dialog-body .account-note { font-size: 12px; border-top: 1px solid var(--line); padding-top: 18px; }
+.not-found { min-height: 60vh; padding: 80px 0; }
+.not-found .primary { max-width: 230px; }
+.login-form { display: grid; gap: 10px; }
+.login-form label { font-size: 13px; font-weight: 600; }
+.login-form input { width: 100%; border: 1px solid #746558; background: #171719; color: #f5eee7; border-radius: 9px; padding: 12px; font: inherit; margin-bottom: 6px; }
+.login-form .primary { justify-content: center; margin: 10px 0; }
+button:disabled { opacity: .65; cursor: wait; }
+.dialog-body .auth-error { color: #f0a293; font-size: 13px; }
+.account-email { overflow-wrap: anywhere; }
+.profile-link { display: inline-block; background: transparent; text-decoration: underline; font-size: 13px; }
+.signout { background: transparent; display: block; padding: 12px 0; margin-top: 15px; font-size: 13px; color: #e0a68e; }
+.account-note a { text-decoration: underline; }
+@media (max-width: 1000px) {
+  .header, main, footer { padding-inline: 26px; }
+  .hero-note { margin-right: 25px; }
+  .world-grid { grid-template-columns: 1.2fr 1fr; grid-template-rows: 280px 280px 280px; }
+  .anime, .manga { grid-row: 3; }
+}
+@media (max-width: 580px) {
+  .header, main, footer { padding-inline: 20px; }
+  .header { height: 83px; }
+  .brand { font-size: 33px; }
+  .brand-mark { width: 35px; height: 35px; }
+  .header nav { gap: 15px; }
+  .account-link { font-size: 12px; gap: 15px; padding: 10px 15px; }
+  .explore-link { display: none; }
+  .hero { padding: 30px 0 36px; }
+  h1 { font-size: 57px; letter-spacing: -3px; }
+  .eyebrow { font-size: 8px; letter-spacing: 1.5px; }
+  .hero-note { display: none; }
+  .intro { font-size: 13px; }
+  .section-heading { gap: 15px; align-items: flex-start; }
+  .section-heading h2 { font-size: 15px; max-width: 190px; line-height: 1.4; }
+  .section-heading > span { font-size: 9px; margin-top: 4px; white-space: nowrap; }
+  .world-grid { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); grid-template-rows: 490px 250px 250px; gap: 12px; }
+  .book-card { grid-column: span 2; grid-row: 1; padding: 22px; }
+  .book-card::after { top: 65px; height: 240px; }
+  .book-art { top: 70px; transform: translateX(-50%) scale(.86); transform-origin: top center; }
+  .book-card:hover .book-art { transform: translateX(-50%) scale(.86) translateY(-5px); }
+  .book-copy { bottom: 23px; left: 23px; right: 23px; }
+  .book-copy h3 { font-size: 38px; }
+  .book-copy > p:not(.mini-label) { margin-bottom: 18px; }
+  .world-card { padding: 16px 13px; }
+  .film, .series { grid-row: 2; }
+  .anime, .manga { grid-row: 3; }
+  .art { height: 134px; }
+  .film-art { transform: rotate(-11deg) scale(.7); flex-shrink: 0; }
+  .series-art { transform: rotate(7deg) scale(.68); flex-shrink: 0; }
+  .anime-art { transform: scale(.76); flex-shrink: 0; }
+  .manga-art { transform: rotate(-8deg) scale(.72); flex-shrink: 0; }
+  .world-copy h3 { font-size: 24px; }
+  .manga h3 { font-size: 17px; line-height: 1.25; }
+  .world-copy p { font-size: 11px; line-height: 1.5; min-height: 33px; margin-top: 6px; }
+  .closing { padding: 17px; gap: 10px; flex-wrap: wrap; margin: 23px 0 30px; }
+  .closing p { font-size: 11px; }
+  .closing > span:last-child { margin-left: 34px; }
+  footer { gap: 15px; flex-wrap: wrap; }
+  footer p, footer > span { font-size: 9px; }
+  .dialog-body { padding: 30px; }
+}
+@media (max-width: 360px) {
+  h1 { font-size: 50px; }
+  .header, main, footer { padding-inline: 16px; }
+  .world-card { padding-inline: 10px; }
+  .manga h3 { font-size: 15px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { transition: none !important; scroll-behavior: auto !important; }
+}
