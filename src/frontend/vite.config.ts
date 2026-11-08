@@ -7,5 +7,6 @@ export default defineConfig({
     '/api': { target: 'http://localhost:5120' },
     '/go': { target: 'http://localhost:5120' },
     '/kitap': { target: 'http://localhost:5120' },
+    '/film': { target: 'http://localhost:5120' },
   } },
 })

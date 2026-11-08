@@ -1,4 +1,4 @@
-param([Parameter(Mandatory)][string]$BooksRoot, [string]$OutputPath)
+﻿param([Parameter(Mandatory)][string]$BooksRoot, [string]$OutputPath)
 $ErrorActionPreference = 'Stop'
 $portalRoot = Split-Path $PSScriptRoot -Parent
 if (!$OutputPath) { $OutputPath = Join-Path $portalRoot 'artifacts/books' }

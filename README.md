@@ -2,7 +2,38 @@
 
 Favo’da e-posta/parola ile giriş yaptıktan sonra **Kitap’ı keşfet** bağlantısı,
 mevcut Favo.Books uygulamasını aynı oturumla `/kitap/catalog` altında açar.
-Film, Dizi, Anime ve Manga hâlâ Yakında durumundadır.
+Film kartı yeni **Favo.Movie** uygulamasını `/film/` altında açar.
+Dizi, Anime ve Manga hâlâ Yakında durumundadır.
+
+## Favo.Movie başlangıcı
+
+Proje: `C:\Users\ahmet\source\repos\Favo.Movie\Favo.Movie.slnx`.
+Koyu sinema teması, katalog arama/filtreleme, film detayları ve ortak hesap arayüzü hazırdır.
+Film profili, sinema avatarları, izleme listeleri, yedi ölçütlü değerlendirme,
+kullanıcı arama ve ortak takip ağı eklendi. Ana sayfada takip edilenlerin izledikleri,
+takipçilerin film puanları ve kişiselleştirilmiş öneriler bulunur.
+Kitap API'sindeki iki yeni okuma ucu nedeniyle **Kitap ve Film backend'lerini yeniden başlatın**.
+Film verileri Movie API'nin `App_Data/movie.db` SQLite dosyasında kalıcıdır;
+bu dosya Git'e ve yayın paketine dahil edilmemelidir. Yayında kalıcı bir dizin için
+`Movie__DatabasePath`, hesap servisi için `Identity__ApiOrigin` ayarlayın.
+
+Film API'si 5130 portunda çalışır. `Start-Favo.ps1` Film ön yüzünü de derler ve
+API çalışmıyorsa başlatır. Farklı klasör için `-MovieRoot` parametresini kullanın.
+Filmleri yüklemek için TMDB API Read Access Token değerini yerelde kaydedin:
+
+```powershell
+cd 'C:\Users\ahmet\source\repos\Favo.Movie'
+dotnet user-secrets set 'Tmdb:ReadAccessToken' 'BURAYA_READ_ACCESS_TOKEN' --project src/backend/Favo.Movie.Api
+```
+
+Ardından uygulamayı yeniden başlatın. Anahtar yalnızca backend'de tutulur.
+Anahtar olmadan katalog hazırlık ekranı gösterilir; gerçek TMDB bağlantısı henüz doğrulanmadı.
+Film için ortak giriş adresi `http://localhost:5175/film/`.
+API'yi ayrı çalıştırmak için:
+
+```powershell
+dotnet run --project 'C:\Users\ahmet\source\repos\Favo.Movie\src\backend\Favo.Movie.Api'
+```
 
 ## Tek komutla çalıştırma
 

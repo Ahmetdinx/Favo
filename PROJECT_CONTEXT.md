@@ -1,4 +1,42 @@
-# Favo — checkpoint 2026-09-30, shared identity implemented
+# Favo — checkpoint 2026-10-13, Movie community verified
+
+Resumed interrupted work: applied pending 15-second discovery budget to the actual
+Movie API, reran 29 community integration checks + 21 catalog checks (all pass),
+Movie frontend build and lint pass. Test PostgreSQL removed by fixture disposal.
+Previous browser verification covered login, avatar save/reload, nickname search,
+follow/unfollow, seven-score save and profile rating, desktop/mobile rendering.
+No live TMDB credentials supplied; provider tests use explicit fake fixtures.
+
+Movie now has SQLite-owned avatars, preferences, watchlist/watching/watched,
+seven-criterion ratings and feedback. Same Books weighting (pace10%, others15%).
+Recommendation parity: genre4, liked genre2/director3, interest1, prior5votes at5,
+min3 votes for criteria, strictly >9 for strong shelves; plus bounded follower bonus.
+Movie authenticates bearer against configured Identity:ApiOrigin (Books), no copied secret.
+Books added /api/readers/me/network-members and /api/readers/{nickname}/identity.
+Movie uses shared follow graph and live public visibility; film avatar independent.
+Movie frontend Community.tsx and community.css: avatar navigation, picker6, people
+search, public profiles/follow/unfollow, profile collections, preferences, ratings,
+personal recommendations + two social columns. Start script passes Identity origin.
+Restart Books and Movie APIs for these changes. Existing running Debug apps were
+left untouched; Release builds and disposable test APIs used for verification.
+Integration tests: tests/Favo.Movie.CommunityChecks (explicit BooksRoot property).
+29 passed using real isolated Books/Postgres + Movie/SQLite + fake TMDB. Browser
+test portal5177 connects Books5118 and Movie5131; not production data.
+
+## Previous initial slice
+
+Favo.Movie created at C:/Users/ahmet/source/repos/Favo.Movie, solution Favo.Movie.slnx.
+Independent .NET10 API5130 with TMDB catalog/search/details and React cinema UI.
+Portal mounts built Movie UI at /film/ and proxies /api/movies before Books /api.
+Film card /go/movie is active. Start/Publish scripts now include Movie.
+Movie reuses exact Favo sessionTransport and existing Books identity; no new users DB.
+TMDB ReadAccessToken is not configured. Live provider and signed-in Movie browser
+flow remain unverified; fake-provider checks passed (21), Favo checks passed (27),
+frontend builds/lints passed. Browser portal-to-film and empty state verified.
+Movie watchlists, ratings, recommendations and social features are future work.
+Existing Start-Favo.cmd and BOM edits preserved. No commit/push in this turn.
+
+## Previous shared identity checkpoint
 
 Latest user request: finish shared login so user signs in on Favo then selects
 Books and tests existing Favo.Books. User also requested terminal launch commands
@@ -48,3 +86,14 @@ sunset/torii, Manga ink/ochre print panels. Increased card height and illustrati
 detail; 390px responsive layout has no horizontal overflow. Desktop cards,
 mobile layout and dark login dialog visually checked; frontend build/lint pass.
 Only Favo CSS and theme-color changed; shared identity logic untouched.
+
+Movie UX alignment (2026-10-14): Movie header now follows Books with a left-side
+nickname combobox (debounced results, avatars, Arrow/Enter/Escape), replacing the
+people navigation tab. Movie detail exposes collection state and a separate
+seven-criterion rating panel, contextual save labels and a profile shortcut.
+Source: C:\Users\ahmet\source\repos\Favo.Movie\src\frontend\src.
+Shared conventions documented in UX_CONVENTIONS.md; Series is not implemented.
+Validation: frontend build/lint pass; 29 disposable community integration checks
+pass. Browser verified search keyboard navigation, save to profile, seven scores,
+and saved 8.0 rating in Puanlarim. Mobile search has no page horizontal overflow.
+UI proof: artifacts/movie-ux/film-review.jpg (fake fixture data only).

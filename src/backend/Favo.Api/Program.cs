@@ -15,6 +15,12 @@ var booksRoot = Path.GetFullPath(builder.Configuration["Books:WebRoot"]
 if (!File.Exists(Path.Combine(booksRoot, "index.html")))
     throw new InvalidOperationException("Books frontend is missing. Run Start-Favo.ps1 or Publish-Favo.ps1 first.");
 using var booksFiles = new PhysicalFileProvider(booksRoot);
+var movieOrigin = builder.Configuration["Movie:ApiOrigin"] is string configuredMovieOrigin
+    ? PortalSecurity.ValidateOrigin(configuredMovieOrigin, development) : null;
+var movieRoot = Path.GetFullPath(builder.Configuration["Movie:WebRoot"]
+    ?? Path.Combine(builder.Environment.ContentRootPath, "wwwroot", "film"), builder.Environment.ContentRootPath);
+using var movieFiles = Directory.Exists(movieRoot) && File.Exists(Path.Combine(movieRoot, "index.html"))
+    ? new PhysicalFileProvider(movieRoot) : null;
 using var proxyClient = new HttpMessageInvoker(new SocketsHttpHandler
 {
     UseProxy = false, UseCookies = false, AllowAutoRedirect = false,
@@ -43,6 +49,8 @@ app.Use(async (context, next) =>
 app.UseDefaultFiles();
 app.UseStaticFiles();
 app.UseStaticFiles(new StaticFileOptions { FileProvider = booksFiles, RequestPath = "/kitap" });
+if (movieFiles is not null)
+    app.UseStaticFiles(new StaticFileOptions { FileProvider = movieFiles, RequestPath = "/film" });
 app.MapGet("/api/health", () => Results.Ok(new { status = "ok", application = "Favo" }));
 app.MapGet("/go/books", (string? path, HttpContext context) =>
 {
@@ -51,7 +59,23 @@ app.MapGet("/go/books", (string? path, HttpContext context) =>
     return destination is null ? Results.BadRequest(new { message = "Geçersiz Kitap bağlantısı." })
         : Results.LocalRedirect(destination);
 });
-app.MapGet("/kitap", () => Results.LocalRedirect("/kitap/"));
+app.MapGet("/kitap", (HttpContext context) => context.Request.Path.Value!.EndsWith('/')
+    ? Results.File(Path.Combine(booksRoot, "index.html"), "text/html") : Results.LocalRedirect("/kitap/"));
+app.MapGet("/go/movie", () => Results.LocalRedirect("/film/"));
+app.MapGet("/film", (HttpContext context) => movieFiles is null
+    ? Results.Json(new { message = "Film uygulaması henüz derlenmedi." }, statusCode: 503)
+    : context.Request.Path.Value!.EndsWith('/') ? Results.File(Path.Combine(movieRoot, "index.html"), "text/html") : Results.LocalRedirect("/film/"));
+app.Map("/api/movies/{**path}", async (HttpContext context, IHttpForwarder forwarder) =>
+{
+    if (movieOrigin is null) { context.Response.StatusCode = 503; await context.Response.WriteAsJsonAsync(new { message = "Film servisi yapılandırılmadı." }); return; }
+    var error = await forwarder.SendAsync(context, movieOrigin, proxyClient,
+        new ForwarderRequestConfig { ActivityTimeout = TimeSpan.FromSeconds(30) }, HttpTransformer.Default);
+    if (error != ForwarderError.None && !context.Response.HasStarted)
+    {
+        context.Response.StatusCode = 502;
+        await context.Response.WriteAsJsonAsync(new { message = "Film servisine ulaşılamıyor. Lütfen tekrar deneyin." });
+    }
+});
 app.Map("/api/{**path}", async (HttpContext context, IHttpForwarder forwarder) =>
 {
     var error = await forwarder.SendAsync(context, apiOrigin, proxyClient,
@@ -63,6 +87,8 @@ app.Map("/api/{**path}", async (HttpContext context, IHttpForwarder forwarder) =
     }
 });
 app.MapFallbackToFile("/kitap/{*path:nonfile}", "index.html", new StaticFileOptions { FileProvider = booksFiles });
+if (movieFiles is not null)
+    app.MapFallbackToFile("/film/{*path:nonfile}", "index.html", new StaticFileOptions { FileProvider = movieFiles });
 app.MapFallbackToFile("index.html");
 app.Run();
 
