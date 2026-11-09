@@ -26,7 +26,9 @@ using var proxyClient = new HttpMessageInvoker(new SocketsHttpHandler
     UseProxy = false, UseCookies = false, AllowAutoRedirect = false,
     AutomaticDecompression = DecompressionMethods.None, ConnectTimeout = TimeSpan.FromSeconds(5)
 });
+var clientAddressTransformer = new ClientAddressTransformer();
 var app = builder.Build();
+if (!development) app.UseHsts();
 app.Use(async (context, next) =>
 {
     context.Response.Headers.XContentTypeOptions = "nosniff";
@@ -79,7 +81,7 @@ app.Map("/api/movies/{**path}", async (HttpContext context, IHttpForwarder forwa
 app.Map("/api/{**path}", async (HttpContext context, IHttpForwarder forwarder) =>
 {
     var error = await forwarder.SendAsync(context, apiOrigin, proxyClient,
-        new ForwarderRequestConfig { ActivityTimeout = TimeSpan.FromSeconds(60) }, HttpTransformer.Default);
+        new ForwarderRequestConfig { ActivityTimeout = TimeSpan.FromSeconds(60) }, clientAddressTransformer);
     if (error != ForwarderError.None && !context.Response.HasStarted)
     {
         context.Response.StatusCode = 502;

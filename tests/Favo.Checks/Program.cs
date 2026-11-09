@@ -18,4 +18,10 @@ Check(!PortalSecurity.IsTrustedMutation("https://evil.test", "same-site", "https
 Check(!PortalSecurity.IsTrustedMutation(null, null, "https://favo.test"), "Missing Origin rejected");
 Check(!PortalSecurity.IsTrustedMutation("null", "cross-site", "https://favo.test"), "Opaque origin rejected");
 Check(!PortalSecurity.IsTrustedMutation("https://favo.test", "cross-site", "https://favo.test"), "Cross site rejected");
+var forwarded = new Microsoft.AspNetCore.Http.DefaultHttpContext();
+forwarded.Connection.RemoteIpAddress = System.Net.IPAddress.Parse("203.0.113.9");
+forwarded.Request.Headers["X-Forwarded-For"] = "198.51.100.1";
+using var proxied = new HttpRequestMessage();
+await new ClientAddressTransformer().TransformRequestAsync(forwarded, proxied, "http://books.test/", default);
+Check(string.Join(",", proxied.Headers.GetValues("X-Forwarded-For")) == "203.0.113.9", "Client forwarded address cannot be spoofed");
 Console.WriteLine($"PASS: {count} navigation/CSRF/configuration checks.");
