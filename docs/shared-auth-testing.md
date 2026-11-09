@@ -42,14 +42,14 @@ dotnet build Favo.slnx
 dotnet run --project tests/Favo.Checks
 npm --prefix src/frontend run build
 npm --prefix src/frontend run lint
-npm --prefix C:/Users/ahmet/source/repos/KitapKivo/src/frontend run lint
+npm --prefix ../Favo.Books/src/frontend run lint
 ```
 
 İzole test ortamı için önce normal Favo sunucularını kapatın. Terminal 1:
 
 ```powershell
-$env:FAVO_BOOKS_ROOT = 'C:\Users\ahmet\source\repos\KitapKivo'
-dotnet run --project tests/Favo.E2eHost -p:BooksRoot=C:/Users/ahmet/source/repos/KitapKivo
+$env:FAVO_BOOKS_ROOT = (Resolve-Path ..\Favo.Books).Path
+dotnet run --project tests/Favo.E2eHost -p:BooksRoot=$env:FAVO_BOOKS_ROOT
 ```
 
 READY mesajından sonra terminal 2:

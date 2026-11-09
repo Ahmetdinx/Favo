@@ -8,15 +8,23 @@ Favo; Kitap, Film ve ileride Dizi/Anime/Manga uygulamalarını tek adreste topla
 
 ```powershell
 dotnet build Favo.slnx
-dotnet run --project tests/Favo.Checks          # 27 yönlendirme, CSRF ve yapılandırma kontrolü
+dotnet run --project tests/Favo.Checks          # 28 yönlendirme, CSRF ve yapılandırma kontrolü
 npm --prefix src/frontend ci
 npm --prefix src/frontend run build
 npm --prefix src/frontend run lint
 ```
 
+Tarayıcı testleri çalışan sisteme karşı koşar, Edge kullanır ve yerel veritabanına `e2e-` önekli test hesabı açar. Oturum başına 5 giriş yaptığı için aynı dakikada iki kez çalıştırılırsa 429 alır:
+
+```powershell
+npm --prefix e2e ci
+npm --prefix e2e test
+npm --prefix e2e test -- -g "Film"     # tek test
+```
+
 `tests/Favo.Checks` çalıştırılabilir bir projedir, `dotnet test` onu bulmaz. Filtre yoktur; ilk başarısız kontrolde durur. `tests/shared-auth-http.mjs` ve `tests/Favo.E2eHost` yöntemi `docs/shared-auth-testing.md` içindedir.
 
-Çalıştırma için `.\Start-Favo.ps1 -BooksRoot <yol> -MovieRoot <yol>` kullanılır. Betik Books ve Movie ön yüzlerini derler, çalışmayan API'leri başlatır; günlükler `artifacts/run` altındadır. Yayın paketi `Publish-Favo.ps1` ile üretilir.
+Çalıştırma için `.\Start-Favo.ps1` kullanılır; projeleri `scripts/Resolve-ProjectRoot.ps1` ile Favo'nun yanında veya `~/source/repos` altında bulur. Betik Books ve Movie ön yüzlerini derler, çalışmayan API'leri başlatır; günlükler `artifacts/run` altındadır. Yayın paketi `Publish-Favo.ps1` ile üretilir.
 
 ## Mimari
 
@@ -34,5 +42,3 @@ npm --prefix src/frontend run lint
 - Erişim JWT'si yalnızca sayfa belleğinde tutulur. URL'ye, localStorage'a veya BroadcastChannel'a token yazılmaz. Sekmeler arası yalnızca login/logout olayı taşınır; kimlik istekleri Web Locks ile sıraya alınır, aksi halde refresh-token rotasyonu oturumu iptal edebilir. Ayrıntılar: `docs/shared-identity.md`.
 - Bu yapı tek origin için geçerlidir. Farklı alan adları gerekirse OIDC Authorization Code + PKCE gerekir; çerez alanını genişletmek veya URL ile JWT taşımak kabul edilmez.
 - Üretimde `Portal__Origin`, `Books__ApiOrigin`, `Movie__ApiOrigin` HTTPS olmalı ve `AllowedHosts` ayarlanmalıdır; varsayılan yalnızca localhost'a izin verir.
-
-`scripts/Integrate-Books.ps1` ve `scripts/books-changes.json` Books'a bir kez uygulanmış geçmiş entegrasyon adımlarıdır; yeni değişiklikler için kullanılmaz.
