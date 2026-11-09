@@ -1,5 +1,8 @@
-param([Parameter(Mandatory)][string]$BooksRoot, [string]$MovieRoot = (Join-Path $env:USERPROFILE 'source/repos/Favo.Movie'))
+param([string]$BooksRoot, [string]$MovieRoot)
 $ErrorActionPreference = 'Stop'
+$resolver = Join-Path $PSScriptRoot 'scripts/Resolve-ProjectRoot.ps1'
+$BooksRoot = & $resolver -Explicit $BooksRoot -Solution 'Favo.Books.slnx' -Names 'Favo.Books', 'Favo Kitap', 'KitapKivo'
+$MovieRoot = & $resolver -Explicit $MovieRoot -Solution 'Favo.Movie.slnx' -Names 'Favo.Movie'
 & (Join-Path $PSScriptRoot 'scripts/Build-Books.ps1') -BooksRoot $BooksRoot
 & (Join-Path $PSScriptRoot 'scripts/Build-Movie.ps1') -MovieRoot $MovieRoot
 dotnet publish (Join-Path $PSScriptRoot 'src/backend/Favo.Api') -c Release -o (Join-Path $PSScriptRoot 'artifacts/publish')

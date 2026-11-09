@@ -3,19 +3,15 @@
     [string]$BooksRoot,
     [string]$BooksApiOrigin = 'http://localhost:5117',
     [switch]$SkipBooksApiStart,
-    [string]$MovieRoot = (Join-Path $env:USERPROFILE 'source/repos/Favo.Movie'),
+    [string]$MovieRoot,
     [string]$MovieApiOrigin = 'http://localhost:5130',
     [switch]$SkipMovieApiStart
 )
 $ErrorActionPreference = 'Stop'
 $favoRoot = $PSScriptRoot
-if (!$BooksRoot) {
-    foreach ($candidate in @((Join-Path $env:USERPROFILE 'source/repos/Favo Kitap'), (Join-Path $env:USERPROFILE 'source/repos/KitapKivo'))) {
-        if (Test-Path (Join-Path $candidate 'Favo.Books.slnx')) { $BooksRoot = $candidate; break }
-    }
-}
-if (!$BooksRoot -or !(Test-Path (Join-Path $BooksRoot 'Favo.Books.slnx'))) { throw 'Kitap bulunamadı. -BooksRoot ile Favo.Books klasörünü belirtin.' }
-if (!(Test-Path (Join-Path $MovieRoot 'Favo.Movie.slnx'))) { throw 'Favo.Movie bulunamadi. -MovieRoot ile proje klasorunu belirtin.' }
+$resolver = Join-Path $favoRoot 'scripts/Resolve-ProjectRoot.ps1'
+$BooksRoot = & $resolver -Explicit $BooksRoot -Solution 'Favo.Books.slnx' -Names 'Favo.Books', 'Favo Kitap', 'KitapKivo'
+$MovieRoot = & $resolver -Explicit $MovieRoot -Solution 'Favo.Movie.slnx' -Names 'Favo.Movie'
 $logRoot = Join-Path $favoRoot 'artifacts/run'
 New-Item -ItemType Directory -Force $logRoot | Out-Null
 $started = [Collections.Generic.List[System.Diagnostics.Process]]::new()
